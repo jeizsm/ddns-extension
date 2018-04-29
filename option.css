@@ -1,0 +1,6 @@
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, fit-content(100%));
+  grid-gap: 10px;
+  grid-auto-rows: minmax(10px, auto);
+}
