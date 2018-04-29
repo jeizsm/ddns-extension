@@ -49,26 +49,31 @@ function dynv6Update(value) {
 }
 
 function noipUpdate(value) {
-  const headers = new Headers({"Authorization": 'Basic ' + btoa(value.login + ":" + value.password)});
-  fetch(`https://dynupdate.no-ip.com/nic/update?hostname=${value.hostname}`, { method: "POST", headers: headers })
-  .then((response) => {
-    response.text().then((text) => console.log(`dynupdate.no-ip.com update: ${text}`))
-  }, (error) => {
-    console.error(error);
-  })
+  if (value.login && value.password && value.hostname) {
+    const headers = new Headers({"Authorization": 'Basic ' + btoa(value.login + ":" + value.password)});
+    fetch(`https://dynupdate.no-ip.com/nic/update?hostname=${value.hostname}`, { method: "POST", headers: headers })
+    .then((response) => {
+      response.text().then((text) => console.log(`dynupdate.no-ip.com update: ${text}`))
+    }, (error) => {
+      console.error(error);
+    })
+  }
 }
+
 function dnsheUpdate(value) {
-  const headers = new Headers({"Authorization": 'Basic ' + btoa(value.hostname + ":" + value.password)});
-  fetch(`http://ipv6.dyn.dns.he.net/nic/update?hostname=${value.hostname}`, { method: "POST", headers: headers })
-  .then((response) => {
-    response.text().then((text) => console.log(`ipv6.dyn.dns.he.net update: ${text}`))
-  }, (error) => {
-    console.error(error);
-  })
-  fetch(`http://ipv4.dyn.dns.he.net/nic/update?hostname=${value.hostname}`, { method: "POST", headers: headers })
-  .then((response) => {
-    response.text().then((text) => console.log(`ipv4.dyn.dns.he.net update: ${text}`))
-  }, (error) => {
-    console.error(error);
-  })
+  if (value.password && value.hostname) {
+    const headers = new Headers({"Authorization": 'Basic ' + btoa(value.hostname + ":" + value.password)});
+    fetch(`http://ipv6.dyn.dns.he.net/nic/update?hostname=${value.hostname}`, { method: "POST", headers: headers })
+    .then((response) => {
+      response.text().then((text) => console.log(`ipv6.dyn.dns.he.net update: ${text}`))
+    }, (error) => {
+      console.error(error);
+    })
+    fetch(`http://ipv4.dyn.dns.he.net/nic/update?hostname=${value.hostname}`, { method: "POST", headers: headers })
+    .then((response) => {
+      response.text().then((text) => console.log(`ipv4.dyn.dns.he.net update: ${text}`))
+    }, (error) => {
+      console.error(error);
+    })
+  }
 }
